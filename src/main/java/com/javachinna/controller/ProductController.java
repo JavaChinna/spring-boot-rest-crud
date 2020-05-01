@@ -2,8 +2,6 @@ package com.javachinna.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,13 +37,13 @@ public class ProductController {
 	}
 
 	@PostMapping("/products")
-	public String createMistakeComment(@Valid @RequestBody Product product) {
+	public String createProduct(@RequestBody Product product) {
 		productService.save(product);
 		return "Product added";
 	}
 
 	@PutMapping("/products/{productId}")
-	public String updateMistakeComment(@PathVariable(value = "productId") Long productId, @Valid @RequestBody Product product) {
+	public String updateProduct(@PathVariable(value = "productId") Long productId, @RequestBody Product product) {
 		return productService.findById(productId).map(p -> {
 			p.setName(product.getName());
 			p.setPrice(product.getPrice());
@@ -55,7 +53,7 @@ public class ProductController {
 	}
 
 	@DeleteMapping("/products/{productId}")
-	public String deleteMistakeComment(@PathVariable(value = "productId") Long productId) {
+	public String deleteProduct(@PathVariable(value = "productId") Long productId) {
 		return productService.findById(productId).map(p -> {
 			productService.deleteById(productId);
 			return "Product deleted";
